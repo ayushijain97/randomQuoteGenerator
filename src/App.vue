@@ -170,7 +170,7 @@ export default {
       try {
         this.loading = true;
         this.image = null;
-        fetch("/api/random") // This will be proxied to https://api.quotable.io/random
+        fetch(process.env.VUE_APP_Text_API_URL + '/random') // This will be proxied to https://api.quotable.io/random
           .then((response) => response.json())
           .then((data) => {
             this.message = data.content;
@@ -186,7 +186,7 @@ export default {
         this.loading = true;
         this.message = null;
         if (this.counter < 6) {
-          const response = await fetch("/other-api/image");
+          const response = await fetch(process.env.VUE_APP_Image_API_URL +  "/image");
           const imageBlob = await response.blob();
           const imageURL = URL.createObjectURL(imageBlob);
           this.image = imageURL;
