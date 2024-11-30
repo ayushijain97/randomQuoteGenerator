@@ -167,12 +167,7 @@ export default {
       try {
         this.loading = true;
         this.image = null;
-        fetch(process.env.VUE_APP_Text_API_URL + "/random", {
-          headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            Authorization: "Bearer YOUR_API_KEY", // Use your API key here
-          },
-        }) // This will be proxied to https://api.quotable.io/random
+        fetch(process.env.VUE_APP_Text_API_URL + "/random") // This will be proxied to https://api.quotable.io/random
           .then((response) => response.json())
           .then((data) => {
             this.message = data.content;
@@ -189,13 +184,8 @@ export default {
         this.message = null;
         if (this.counter < 6) {
           const response = await fetch(
-            process.env.VUE_APP_Image_API_URL + "/image",
-            {
-              headers: {
-                "X-Requested-With": "XMLHttpRequest",
-                Authorization: "Bearer YOUR_API_KEY", // Use your API key here
-              },
-            }
+            "https://api.allorigins.win/get?url=" +
+              encodeURIComponent(process.env.VUE_APP_Image_API_URL + "/image")
           );
           const imageBlob = await response.blob();
           const imageURL = URL.createObjectURL(imageBlob);
