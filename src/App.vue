@@ -36,10 +36,7 @@
           "
         >
           <template v-if="message">
-            <div
-              ref="message"
-              style="padding: 10px; position: relative"
-            >
+            <div ref="message" style="padding: 10px; position: relative">
               <span ref="text">
                 {{ message }}
               </span>
@@ -119,7 +116,7 @@
           style="
             display: flex;
             align-items: center;
-            background-color: #B9D0E9;
+            background-color: #b9d0e9;
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
@@ -170,7 +167,12 @@ export default {
       try {
         this.loading = true;
         this.image = null;
-        fetch(process.env.VUE_APP_Text_API_URL + '/random') // This will be proxied to https://api.quotable.io/random
+        fetch(process.env.VUE_APP_Text_API_URL + "/random", {
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            Authorization: "Bearer YOUR_API_KEY", // Use your API key here
+          },
+        }) // This will be proxied to https://api.quotable.io/random
           .then((response) => response.json())
           .then((data) => {
             this.message = data.content;
@@ -186,7 +188,15 @@ export default {
         this.loading = true;
         this.message = null;
         if (this.counter < 6) {
-          const response = await fetch(process.env.VUE_APP_Image_API_URL +  "/image");
+          const response = await fetch(
+            process.env.VUE_APP_Image_API_URL + "/image",
+            {
+              headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                Authorization: "Bearer YOUR_API_KEY", // Use your API key here
+              },
+            }
+          );
           const imageBlob = await response.blob();
           const imageURL = URL.createObjectURL(imageBlob);
           this.image = imageURL;
@@ -320,15 +330,15 @@ export default {
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
-  background: #B9D0E9;
-    border: none;
-    color: cornsilk;
-    font-weight: 700;
-    font-size: 15px;
+  background: #b9d0e9;
+  border: none;
+  color: cornsilk;
+  font-weight: 700;
+  font-size: 15px;
 }
 
 .highlight {
-  background-color: #B9D0E9;
+  background-color: #b9d0e9;
   padding: 2px;
   font-weight: bold;
 }
